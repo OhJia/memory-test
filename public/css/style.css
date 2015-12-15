@@ -1,4 +1,46 @@
 .ui-elements {
-	position: relative;
-    z-index: 10;
+  /*position: relative;*/
+  z-index: 10;
+}
+
+.right {
+  float: right;
+  /*background:#999;*/
+  text-align: right;
+}
+
+.left {
+  display: inline-block;
+}
+
+img {
+  width: 100%;
+}
+
+header {
+  position:fixed; 
+  left:0px;
+  height:100px;
+  width:95%;
+  padding: 20px 20px 0 30px;
+  /*background:#999;*/
+}
+
+canvas {
+  position:fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  z-index: 1;
+}
+
+footer {
+  position:fixed; 
+  left:0px;
+  bottom:0px;
+  height:100px;
+  width:95%;
+  padding: 0 20px 0 30px;
+  /*background:#999; */
 }

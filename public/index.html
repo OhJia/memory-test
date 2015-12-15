@@ -5,68 +5,17 @@
     <title>React Tutorial</title>
     <!-- Not present in the tutorial. Just for basic styling. -->
     <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
-    <style>
-      .ui-elements {
-        /*position: relative;*/
-        z-index: 10;
-      }
-
-      .right {
-        float: right;
-        /*background:#999;*/
-        text-align: right;
-      }
-
-      .left {
-        display: inline-block;
-      }
-
-      img {
-        width: 100%;
-      }
-
-      header {
-        position:fixed; 
-        left:0px;
-        height:100px;
-        width:95%;
-        padding: 20px 20px 0 30px;
-        /*background:#999;*/
-      }
-
-      canvas {
-        position:fixed; 
-        top: 0; 
-        left: 0; 
-        right: 0; 
-        bottom: 0; 
-        z-index: 1;
-      }
-
-      footer {
-        position:fixed; 
-        left:0px;
-        bottom:0px;
-        height:100px;
-        width:95%;
-        padding: 0 20px 0 30px;
-        /*background:#999; */
-      }
-
-    </style>
+    
   </head>
-<!--   <body onload="draw()"> -->
+
   <body>
-<!--     <canvas id="canvas1" width="800" height="480">
-          Please use a browser that supports "canvas"
-    </canvas> -->
-    <div id="content">
-    </div>
+    <div id="content"></div>
 
     <script type="text/babel" src="scripts/app.js"></script>
     <script type="text/babel">
