@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Basic Three.js Test</title>
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
+  <script type="text/javascript" src="drawing.js"></script>
+  <script>
+    var scene, camera, renderer, cameraRig;
+    
+    var drawings;
+    
+    window.onload = function() {
+      scene = new THREE.Scene();
+      var aspectRatio = 1;
+      camera = new THREE.PerspectiveCamera(45, aspectRatio, 1, 1000);
+      renderer = new THREE.WebGLRenderer();
+      renderer.setSize( 512, 512 );
+      document.getElementById("container").appendChild( renderer.domElement );
+      
+      camera.position.z = 4;
+      cameraRig = new THREE.Object3D();
+      cameraRig.add(camera);
+      scene.add(cameraRig);
+      
+      var geo = new THREE.PlaneGeometry(2, 2);
+      var floorMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      var wallMat = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+      
+      var floor = new THREE.Mesh(geo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = -1;
+      scene.add(floor);
+      
+      var wall1 = new THREE.Mesh(geo, wallMat);
+      wall1.position.z = -1;
+      scene.add(wall1);
+      
+      var wall2 = new THREE.Mesh(geo, wallMat);
+      wall2.rotation.x = Math.PI;
+      wall2.position.z = 1;
+      scene.add(wall2);
+      
+      var wall3 = new THREE.Mesh(geo, wallMat);
+      wall3.rotation.y = -Math.PI / 2;
+      wall3.position.x = 1;
+      scene.add(wall3);
+      
+      var wall4 = new THREE.Mesh(geo, wallMat);
+      wall4.rotation.y = Math.PI / 2;
+      wall4.position.x = -1;
+      scene.add(wall4);
+      
+      // Now, set up a loop function for animation
+      requestAnimationFrame( animate );
+      
+      setupDrawingCanvas();
+    }
+    
+    // Now, set up a looping function
+    function animate() {
+      cameraRig.rotation.y += 0.01;
+      
+      // Finish with a new render call
+      renderer.render( scene, camera );
+      requestAnimationFrame( animate );
+    }
+    
+    function addDrawing() {
+      console.log(getImage());
+      
+      var newGeo = new THREE.PlaneGeometry(2, 2);
+      var newTex = THREE.ImageUtils.loadTexture( getImage() );
+      newTex.anisotropy = renderer.getMaxAnisotropy();
+      var newMat = new THREE.MeshBasicMaterial({ map: newTex, side: THREE.DoubleSide, transparent: true });
+      
+      var newObj = new THREE.Mesh(newGeo, newMat);
+      newObj.rotation.x = -Math.PI / 2;
+      newObj.position.y = -Math.random();
+      scene.add(newObj);
+      
+      clear();
+    }
+  </script>
+  <style>
+    canvas {
+      margin: 20px;
+      border: solid 1px black;
+    }
+  </style>
+</head>
+<body id="container">
+  <canvas id="drawingPad" width="512" height="512"></canvas>
+</body>
+</html>
