@@ -1,5 +1,6 @@
 var gl, prog;
 var pi = Math.PI;
+//var clear = glClear();
 
 
 function draw() {
@@ -123,7 +124,15 @@ function draw() {
       gl.uniformMatrix4fv(address('uMatrix'), false, matrix);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertices.length / 3);
    }
+
+   document.getElementById('draw-nav').addEventListener('click', function() {
+      // gl.clearRect(0, 0, canvas.width, canvas.height);
+      // canvas.update(gl);
+      clear(gl);
+   }, false);
 }
+
+
 
 
 
