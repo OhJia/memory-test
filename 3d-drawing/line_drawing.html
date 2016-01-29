@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Three.js Lines</title>
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
+  <script>
+    // Your 3d scene will always need one of each of these
+    var scene, camera, renderer;
+    
+    var geometry, material, object;
+    
+    // Set up some init function (I like to call it when the window loads)
+    window.onload = function() {
+      // Create a basic scene
+      scene = new THREE.Scene();
+      
+      // Create a basic perspective camera
+      var aspectRatio = window.innerWidth / window.innerHeight;
+      camera = new THREE.PerspectiveCamera(45, aspectRatio, 1, 1000);
+      
+      // Create a WebGL renderer    
+      renderer = new THREE.WebGLRenderer();
+      // Set it to the size of our window
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      // Attach it to the body HTML element
+      document.getElementById("container").appendChild( renderer.domElement );
+      
+      // At this point, you'd probably want to create some objects or lights
+      camera.position.z = 10;
+      
+      // var geometry = new THREE.Geometry();
+      // geometry.vertices.push(new THREE.Vector3(0, 0, 0));
+      // geometry.vertices.push(new THREE.Vector3(0, 1, 0));
+      // geometry.vertices.push(new THREE.Vector3(0.5, 0.5, 0));
+      // 
+      // var material = new THREE.LineBasicMaterial({ color: 0xffff00, linewidth: 10 });
+      // 
+      // var line = new THREE.Line(geometry, material);
+      // 
+      // scene.add(line);
+      
+      var path = [];
+      
+      path.push(new THREE.Vector3(0, 0, 0),
+                new THREE.Vector3(0, 1, 0),
+                new THREE.Vector3(1, 0.5, 0),
+                new THREE.Vector3(3, 0, 0));
+      
+      geometry = createStrokeGeometry(path);
+      
+      material = new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true});
+      object = new THREE.Mesh(geometry, material);
+      
+      scene.add(object);
+      
+      // Now, set up a loop function for animation
+      requestAnimationFrame( animate );
+    }
+    
+    // Now, set up a looping function
+    function animate() {
+      // Update whatever needs to be changed in this frame
+      
+      // Finish with a new render call
+      renderer.render( scene, camera );
+      
+      // Tell our function to loop again on the next frame
+      requestAnimationFrame( animate );
+    }
+    
+    // Convert array of Vector3's to triangle strip geometry
+    function createStrokeGeometry( path ) {
+      var geometry = new THREE.BufferGeometry();
+      
+      var vertices = new Float32Array( path.length * 6 ); // Two vertices per path point
+      var indices = new Uint16Array( (path.length - 1) * 6 ); // Two triangles per path point
+      
+      for(var i = 0; i < path.length; ++i) {
+        vertices[i * 6 + 0] = vertices[i * 6 + 3] = path[i].x;
+        vertices[i * 6 + 1] = vertices[i * 6 + 4] = path[i].y;
+        vertices[i * 6 + 2] = vertices[i * 6 + 5] = path[i].z;
+        
+        if(i < path.length - 1) {
+          indices[i * 6 + 0] = i * 2;
+          indices[i * 6 + 1] = i * 2 + 1;
+          indices[i * 6 + 2] = i * 2 + 2;
+          indices[i * 6 + 3] = i * 2 + 2;
+          indices[i * 6 + 4] = i * 2 + 1;
+          indices[i * 6 + 5] = i * 2 + 3;
+        }
+      }
+
+      geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+      geometry.addAttribute( 'index', new THREE.BufferAttribute( indices, 3 ) );
+      
+      return geometry;
+    }
+  </script>
+</head>
+<body id="container" style="margin: 0;"></body>
+</html>
